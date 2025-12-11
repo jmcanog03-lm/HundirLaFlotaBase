@@ -13,7 +13,7 @@ public class App {
     private static int TAM = 10;
 
     /**
-     * Tablero del jugador 1. 
+     * Tablero del jugador 1.
      * Cada posición contiene:
      * 0 = agua, 1-5 = barco sin tocar, 6 = barco tocado, 7 = disparo a agua.
      */
@@ -56,7 +56,8 @@ public class App {
     private static final String[] nombres = { "Lancha", "Crucero", "Submarino", "Buque", "Portaaviones" };
 
     /**
-     * Direcciones posibles para colocar los barcos: arriba, derecha, abajo, izquierda.
+     * Direcciones posibles para colocar los barcos: arriba, derecha, abajo,
+     * izquierda.
      */
     private static final int direcciones[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
 
@@ -70,7 +71,8 @@ public class App {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_GREY = "\u001B[90m";
     private static final String ANSI_WHITE = "\u001B[37m";
-    private static final String[] colores = { ANSI_BLACK, ANSI_CYAN, ANSI_BLUE, ANSI_YELLOW, ANSI_GREEN, ANSI_PURPLE, ANSI_RED, ANSI_GREY };
+    private static final String[] colores = { ANSI_BLACK, ANSI_CYAN, ANSI_BLUE, ANSI_YELLOW, ANSI_GREEN, ANSI_PURPLE,
+            ANSI_RED, ANSI_GREY };
 
     /**
      * Método principal que inicia el juego.
@@ -93,40 +95,81 @@ public class App {
      * @return Opción elegida por el usuario: 0 = Salir, 1 = PVP, 2 = PVE.
      */
     public static int menuJuego() {
+
         // TODO función menuJuego
+
+        boolean salida = false;
+
+        while (!salida) {
+
+            System.out.println("Menu del Juego");
+            System.out.println("0. Salir");
+            System.out.println("1. PVP");
+            System.out.println("2. PVE");
+
+            int opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+                case 0 -> salida = true;
+                case 1 -> jugarPVP();
+                case 2 -> jugarPVE();
+
+                default -> System.out.println("Introduce una opción correcta");
+
+            }
+
+        }
+
         return 0;
     }
 
     /**
-     * Inicializa los tableros de ambos jugadores, calcula los barcos y solicita el modo de juego.
+     * Inicializa los tableros de ambos jugadores, calcula los barcos y solicita el
+     * modo de juego.
      * Dependiendo de la opción elegida, inicia PVP o PVE.
      * 
      * Este método realiza los siguientes pasos:
      * <ol>
-     * <li>Llama a {@link #generarTablero()} para crear los tableros de ambos jugadores.</li>
-     * <li>Calcula el número total de casillas de barco con {@link #calcularNBarcos(int[], int[])}.</li>
+     * <li>Llama a {@link #generarTablero()} para crear los tableros de ambos
+     * jugadores.</li>
+     * <li>Calcula el número total de casillas de barco con
+     * {@link #calcularNBarcos(int[], int[])}.</li>
      * <li>Muestra ambos tableros completos.</li>
-     * <li>Muestra el menú de selección de juego y ejecuta el modo seleccionado.</li>
+     * <li>Muestra el menú de selección de juego y ejecuta el modo
+     * seleccionado.</li>
      * </ol>
      *
-     * @postcondición Los tableros de los jugadores están generados y el juego inicia en el modo seleccionado.
+     * @postcondición Los tableros de los jugadores están generados y el juego
+     *                inicia en el modo seleccionado.
      */
     public static void prepararJuego() {
         // TODO función prepararJuego
+
+        barcosJ1 = generarTablero();
+        barcosJ2 = generarTablero();
+
+        nBarcos1 = calcularNBarcos(cantidad, tamanios);
+        nBarcos2 = calcularNBarcos(cantidad, tamanios);
+
+        mostrarTablero(barcosJ1);
+        mostrarTablero(barcosJ2);
+
+        menuJuego();
     }
 
     /**
-     * Calcula el número total de casillas de barco dadas las cantidades y tamaños de barcos.
+     * Calcula el número total de casillas de barco dadas las cantidades y tamaños
+     * de barcos.
      *
      * @param cantidades Array con la cantidad de barcos por tipo.
-     * @param tamanios Array con los tamaños de los barcos correspondientes.
+     * @param tamanios   Array con los tamaños de los barcos correspondientes.
      * @return Total de casillas de barco.
      * @precondición {@code cantidades.length == tamanios.length}.
      */
-    public static int calcularNBarcos(int[] cantidades, int[] tamanios){
-        int total=0;
+    public static int calcularNBarcos(int[] cantidades, int[] tamanios) {
+        int total = 0;
         for (int i = 0; i < tamanios.length; i++) {
-            total+=cantidades[i] * tamanios[i];
+            total += cantidades[i] * tamanios[i];
         }
 
         return total;
@@ -137,10 +180,62 @@ public class App {
      * Permite que ambos jugadores disparen alternativamente hasta que uno gane.
      *
      * @precondición Los tableros de ambos jugadores deben estar inicializados.
-     * @postcondición El juego termina cuando {@link #nBarcos1} o {@link #nBarcos2} llega a 0.
+     * @postcondición El juego termina cuando {@link #nBarcos1} o {@link #nBarcos2}
+     *                llega a 0.
      */
     public static void jugarPVP() {
         // TODO función jugarPVP
+
+        boolean salida = true;
+
+        while (nBarcos1 > 0 && nBarcos2 > 0 && salida) {
+            System.out.println("Jugador 1 ");
+
+            mostrarJugador2();
+
+            System.out.println("Introduce la coordenada x e y");
+            int fila = Integer.parseInt(sc.nextLine());
+            int columna = Integer.parseInt(sc.nextLine());
+
+            boolean disparo = disparar(barcosJ2, fila, columna);
+
+            if (disparo) {
+                nBarcos2--;
+                System.out.println("Has tocado un barco!!!!!");
+            } else {
+                System.out.println("Ya has disparado aqui");
+            }
+
+            if (nBarcos2 == 0) {
+                salida = false;
+            }
+
+            System.out.println("Jugador 2 ");
+            mostrarJugador1();
+
+            System.out.println("Introduce la coordenada x e y");
+
+            int fila_jugador2 = Integer.parseInt(sc.nextLine());
+            int columna_jugador2 = Integer.parseInt(sc.nextLine());
+
+            boolean disparo_jugador2 = disparar(barcosJ1, fila_jugador2, columna_jugador2);
+
+            if (disparo_jugador2) {
+                nBarcos1--;
+                System.out.println("Has tocado un barco!!!!!");
+            } else {
+                System.out.println("Ya has disparado aqui");
+            }
+
+        }
+
+        if (nBarcos1 == 0) {
+            System.out.println("El ganador es el jugador 2");
+        }
+
+        if (nBarcos2 == 0) {
+            System.out.println("El ganador es el jugador 1");
+        }
     }
 
     /**
@@ -148,34 +243,107 @@ public class App {
      * La máquina dispara aleatoriamente.
      *
      * @precondición Los tableros de ambos jugadores deben estar inicializados.
-     * @postcondición El juego termina cuando {@link #nBarcos1} o {@link #nBarcos2} llega a 0.
+     * @postcondición El juego termina cuando {@link #nBarcos1} o {@link #nBarcos2}
+     *                llega a 0.
      */
     public static void jugarPVE() {
         // TODO función jugarPVE
+        Random coordenadas = new Random();
+        
+        while (nBarcos1 > 0 && nBarcos2 > 0) {
+            System.out.println("Jugador 1 ");
+
+            mostrarJugador2();
+
+            System.out.println("Introduce la coordenada x e y");
+            int fila = Integer.parseInt(sc.nextLine());
+            int columna = Integer.parseInt(sc.nextLine());
+
+            boolean disparo = disparar(barcosJ2, fila, columna);
+
+            if (disparo) {
+                nBarcos2--;
+                System.out.println("Has tocado un barcon de la maquina!!!!!");
+            } else {
+                System.out.println("Ya has disparado aqui");
+            }
+
+            System.out.println("Turno de la maquina");
+            mostrarJugador1();
+
+            int fila_jugador2 = coordenadas.nextInt(10);
+            int columna_jugador2 = coordenadas.nextInt(10);
+
+            boolean disparo_jugador2 = disparar(barcosJ1, fila_jugador2, columna_jugador2);
+
+            while (!disparo_jugador2) {
+                int nueva_fila = coordenadas.nextInt(10);
+                int nueva_columna = coordenadas.nextInt(10);
+                disparo_jugador2 = disparar(barcosJ1, nueva_fila, nueva_columna);
+            }
+
+            if (disparo_jugador2) {
+                nBarcos1--;
+                System.out.println("La maquina ha tocado tu barco!!!!!");
+            }
+
+        }
+
+        if (nBarcos1 == 0) {
+            System.out.println("El ganador es la maquina");
+        }
+
+        if (nBarcos2 == 0) {
+            System.out.println("El ganador es el jugador 1");
+        }
     }
 
     /**
      * Realiza un disparo sobre el tablero especificado.
      *
      * @param matriz Tablero donde se dispara.
-     * @param x Coordenada X (fila) del disparo.
-     * @param y Coordenada Y (columna) del disparo.
-     * @return {@code true} si se tocó un barco, {@code false} si fue agua o disparo repetido.
+     * @param x      Coordenada X (fila) del disparo.
+     * @param y      Coordenada Y (columna) del disparo.
+     * @return {@code true} si se tocó un barco, {@code false} si fue agua o disparo
+     *         repetido.
      * @precondición {@code 0 <= x < TAM && 0 <= y < TAM}.
-     * @postcondición La matriz queda actualizada con el resultado del disparo (6 = tocado, 7 = agua).
+     * @postcondición La matriz queda actualizada con el resultado del disparo (6 =
+     *                tocado, 7 = agua).
      */
     public static boolean disparar(int[][] matriz, int x, int y) {
         // TODO función disparar
+
+        if (x >= 0 && x < TAM && y >= 0 && y < TAM) {
+        } else {
+            return false;
+        }
+
+        if (matriz[x][y] == 6 || matriz[x][y] == 7) {
+            return false;
+        }
+
+        if (matriz[x][y] == 0) {
+            matriz[x][y] = 7;
+            return false;
+        }
+
+        if (matriz[x][y] > 1 && matriz[x][y] <= 5) {
+            matriz[x][y] = 6;
+            return true;
+        }
+
         return false;
     }
 
     /**
-     * Determina si un barco ha sido tocado o hundido a partir de la casilla disparada.
+     * Determina si un barco ha sido tocado o hundido a partir de la casilla
+     * disparada.
      *
      * @param matriz Tablero donde se encuentra el barco.
-     * @param x Coordenada X (fila) del disparo.
-     * @param y Coordenada Y (columna) del disparo.
-     * @return {@code true} si el barco está completamente hundido, {@code false} si solo ha sido tocado.
+     * @param x      Coordenada X (fila) del disparo.
+     * @param y      Coordenada Y (columna) del disparo.
+     * @return {@code true} si el barco está completamente hundido, {@code false} si
+     *         solo ha sido tocado.
      */
     public static boolean cantarDisparo(int[][] matriz, int x, int y) {
         // TODO OPCIONAL función cantarDisparo
@@ -189,15 +357,19 @@ public class App {
      * 
      * Para cada tipo de barco:
      * <ul>
-     * <li>Se intenta colocar la cantidad correspondiente de barcos de ese tamaño.</li>
-     * <li>Se elige una posición aleatoria y una dirección válida usando {@link #comprobarDirecciones(int, int, int)}.</li>
+     * <li>Se intenta colocar la cantidad correspondiente de barcos de ese
+     * tamaño.</li>
+     * <li>Se elige una posición aleatoria y una dirección válida usando
+     * {@link #comprobarDirecciones(int, int, int)}.</li>
      * <li>Se coloca el barco con {@link #copiarBarcoEn(int, int, int, int)}.</li>
      * </ul>
      *
-     * @return Matriz {@link int[][]} de tamaño {@link #TAM} x {@link #TAM} con los barcos colocados.
+     * @return Matriz {@link int[][]} de tamaño {@link #TAM} x {@link #TAM} con los
+     *         barcos colocados.
      *         0 = agua, 1-5 = barco sin tocar.
      * @precondición {@link #TAM} debe ser mayor que 0.
-     * @postcondición {@link #matrizAux} queda reiniciada a cero y se devuelve un tablero completo.
+     * @postcondición {@link #matrizAux} queda reiniciada a cero y se devuelve un
+     *                tablero completo.
      */
     public static int[][] generarTablero() {
         Random r = new Random();
@@ -223,29 +395,57 @@ public class App {
     }
 
     /**
-     * Comprueba si una posición (x,y) está libre para colocar un barco. Comprueba que todas las casillas del barco tengan espacio
+     * Comprueba si una posición (x,y) está libre para colocar un barco. Comprueba
+     * que todas las casillas del barco tengan espacio
      * para lo cual debe haber al menos una casilla vacía entre barco y barco.
      * 
      * La comprobación se realiza en la matriz matrizAux
      *
      * @param x Fila de la posición a comprobar.
      * @param y Columna de la posición a comprobar.
-     * @return {@code true} si la posición y sus adyacentes están libres, {@code false} en caso contrario.
+     * @return {@code true} si la posición y sus adyacentes están libres,
+     *         {@code false} en caso contrario.
      */
     public static boolean comprobarPosicion(int x, int y) {
         // TODO función comprobarPosición
 
-        return false;
+        if (x >= 0 && x < TAM && y >= 0 && y < TAM) {
+        } else {
+            return false;
+        }
+
+        if (matrizAux[x][y] != 0) {
+            return false;
+        }
+
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if (i >= 0 && i < TAM && j >= 0 && j < TAM) {
+
+                    if (matrizAux[i][j] != 0) {
+                        return false;
+
+                    }
+
+                }
+            }
+        }
+
+        return true;
     }
 
     /**
-     * Determina una dirección viable para colocar un barco de tamaño dado desde (x,y).
+     * Determina una dirección viable para colocar un barco de tamaño dado desde
+     * (x,y).
      *
-     * @param x Fila de inicio.
-     * @param y Columna de inicio.
+     * @param x        Fila de inicio.
+     * @param y        Columna de inicio.
      * @param tamBarco Tamaño del barco.
-     * @return Índice de la dirección válida (0=arriba,1=derecha,2=abajo,3=izquierda), -1 si no hay direcciones válidas.
-     * @precondición {@code 1 <= tamBarco <= 5} y {@code 0 <= x < TAM && 0 <= y < TAM}.
+     * @return Índice de la dirección válida
+     *         (0=arriba,1=derecha,2=abajo,3=izquierda), -1 si no hay direcciones
+     *         válidas.
+     * @precondición {@code 1 <= tamBarco <= 5} y
+     *               {@code 0 <= x < TAM && 0 <= y < TAM}.
      */
     public static int comprobarDirecciones(int x, int y, int tamBarco) {
         Random r = new Random();
@@ -278,15 +478,16 @@ public class App {
             return direccionesViables[r.nextInt(nDireccionesViables)];
     }
 
-    
     /**
      * Copia un barco en la posición (x,y) siguiendo la dirección indicada.
      *
-     * @param x Fila inicial.
-     * @param y Columna inicial.
-     * @param direccion Dirección del barco (0=arriba,1=derecha,2=abajo,3=izquierda).
-     * @param tamanio Tamaño del barco.
-     * @precondición {@code 0 <= x,y < TAM}, {@code direccion ∈ [0,3]}, {@code tamanio > 0}.
+     * @param x         Fila inicial.
+     * @param y         Columna inicial.
+     * @param direccion Dirección del barco
+     *                  (0=arriba,1=derecha,2=abajo,3=izquierda).
+     * @param tamanio   Tamaño del barco.
+     * @precondición {@code 0 <= x,y < TAM}, {@code direccion ∈ [0,3]},
+     *               {@code tamanio > 0}.
      * @postcondición {@link #matrizAux} queda modificada con el barco colocado.
      */
     public static void copiarBarcoEn(int x, int y, int direccion, int tamanio) {
@@ -297,7 +498,6 @@ public class App {
 
     // #endregion
 
-    
     /**
      * Muestra por consola el tablero completo, incluyendo barcos y disparos.
      *
@@ -307,16 +507,17 @@ public class App {
         // TODO función mostrarTablero
     }
 
-    
     /**
-     * Muestra el tablero del jugador 1 y el tablero rival, ocultando los barcos enemigos.
+     * Muestra el tablero del jugador 1 y el tablero rival, ocultando los barcos
+     * enemigos.
      */
     public static void mostrarJugador1() {
         // TODO función mostrarJugador1
     }
 
     /**
-     * Muestra el tablero del jugador 2 y el tablero rival, ocultando los barcos enemigos.
+     * Muestra el tablero del jugador 2 y el tablero rival, ocultando los barcos
+     * enemigos.
      */
     public static void mostrarJugador2() {
         // TODO función mostrarJugador2
