@@ -99,7 +99,7 @@ public class App {
         // TODO función menuJuego
 
         boolean salida = false;
-
+        int opcion = 1;
         while (!salida) {
 
             System.out.println("Menu del Juego");
@@ -107,7 +107,7 @@ public class App {
             System.out.println("1. PVP");
             System.out.println("2. PVE");
 
-            int opcion = Integer.parseInt(sc.nextLine());
+            opcion = Integer.parseInt(sc.nextLine());
 
             switch (opcion) {
                 case 0 -> salida = true;
@@ -120,7 +120,9 @@ public class App {
 
         }
 
-        return 0;
+        return opcion;
+
+      
     }
 
     /**
@@ -249,7 +251,7 @@ public class App {
     public static void jugarPVE() {
         // TODO función jugarPVE
         Random coordenadas = new Random();
-        
+
         while (nBarcos1 > 0 && nBarcos2 > 0) {
             System.out.println("Jugador 1 ");
 
@@ -505,6 +507,36 @@ public class App {
      */
     public static void mostrarTablero(int[][] matriz) {
         // TODO función mostrarTablero
+
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                int valor_actual = matriz[i][j];
+
+                if (valor_actual == 6) {
+                    System.out.print("x");
+
+                }
+
+                if (valor_actual == 7) {
+                    System.out.print("~");
+
+                }
+
+                if (valor_actual == 0) {
+                    System.out.print(". ");
+
+                }
+
+                if (valor_actual > 1 && valor_actual <= 5) {
+                    System.out.print(". ");
+
+                }
+
+            }
+
+            System.out.println();
+
+        }
     }
 
     /**
@@ -513,6 +545,65 @@ public class App {
      */
     public static void mostrarJugador1() {
         // TODO función mostrarJugador1
+
+        System.out.println("Tu tablero");
+        for (int i = 0; i < barcosJ1.length; i++) {
+            for (int j = 0; j < barcosJ1[i].length; j++) {
+                int valor_actual = barcosJ1[i][j];
+
+                if (valor_actual == 6) {
+                    System.out.print("x");
+
+                }
+
+                if (valor_actual == 7) {
+                    System.out.print("~");
+
+                }
+
+                if (valor_actual == 0) {
+                    System.out.print(". ");
+
+                }
+
+                if (valor_actual > 1 && valor_actual <= 5) {
+                    System.out.print(". ");
+
+                }
+
+            }
+
+            System.out.println();
+
+        }
+
+        System.out.println("Tablero Rival");
+
+        for (int i = 0; i < barcosJ2.length; i++) {
+            for (int j = 0; j < barcosJ2[i].length; j++) {
+                int valor_actual = barcosJ2[i][j];
+
+                if (valor_actual == 6) {
+                    System.out.print("x");
+
+                }
+
+                if (valor_actual == 7) {
+                    System.out.print("~");
+
+                }
+
+                if (valor_actual == 0) {
+                    System.out.print(". ");
+
+                }
+
+            }
+
+            System.out.println();
+
+        }
+
     }
 
     /**
@@ -521,5 +612,65 @@ public class App {
      */
     public static void mostrarJugador2() {
         // TODO función mostrarJugador2
+
+        System.out.println("Tu tablero");
+
+        for (int i = 0; i < barcosJ2.length; i++) {
+            for (int j = 0; j < barcosJ2[i].length; j++) {
+                int valor_actual = barcosJ2[i][j];
+
+                if (valor_actual == 6) {
+                    System.out.print("x");
+
+                }
+
+                if (valor_actual == 7) {
+                    System.out.print("~");
+
+                }
+
+                if (valor_actual == 0) {
+                    System.out.print(". ");
+
+                }
+
+                if (valor_actual > 1 && valor_actual <= 5) {
+                    System.out.print(". ");
+
+                }
+
+            }
+
+            System.out.println();
+
+        }
+
+        System.out.println("Tablero Rival");
+
+        for (int i = 0; i < barcosJ1.length; i++) {
+            for (int j = 0; j < barcosJ1[i].length; j++) {
+                int valor_actual = barcosJ1[i][j];
+
+                if (valor_actual == 6) {
+                    System.out.print("x");
+
+                }
+
+                if (valor_actual == 7) {
+                    System.out.print("~");
+
+                }
+
+                if (valor_actual == 0) {
+                    System.out.print(". ");
+
+                }
+
+            }
+
+            System.out.println();
+
+        }
+
     }
 }
