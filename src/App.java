@@ -43,23 +43,23 @@ public class App {
     /**
      * Cantidad de barcos por tipo (índice 0 = tamaño 1, índice 4 = tamaño 5).
      */
-    private static final int cantidad[] = {5, 4, 3, 2, 1};
+    private static final int cantidad[] = { 5, 4, 3, 2, 1 };
 
     /**
      * Tamaño de los barcos (1 a 5 casillas).
      */
-    private static final int tamanios[] = {1, 2, 3, 4, 5};
+    private static final int tamanios[] = { 1, 2, 3, 4, 5 };
 
     /**
      * Nombres de los barcos según su tamaño.
      */
-    private static final String[] nombres = {"Lancha", "Crucero", "Submarino", "Buque", "Portaaviones"};
+    private static final String[] nombres = { "Lancha", "Crucero", "Submarino", "Buque", "Portaaviones" };
 
     /**
      * Direcciones posibles para colocar los barcos: arriba, derecha, abajo,
      * izquierda.
      */
-    private static final int direcciones[][] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+    private static final int direcciones[][] = { { -1, 0 }, { 0, 1 }, { 1, 0 }, { 0, -1 } };
 
     // Colores ANSI para imprimir el tablero en consola
     private static final String ANSI_BLACK = "\u001B[30m";
@@ -71,8 +71,8 @@ public class App {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_GREY = "\u001B[90m";
     private static final String ANSI_WHITE = "\u001B[37m";
-    private static final String[] colores = {ANSI_BLACK, ANSI_CYAN, ANSI_BLUE, ANSI_YELLOW, ANSI_GREEN, ANSI_PURPLE,
-        ANSI_RED, ANSI_GREY};
+    private static final String[] colores = { ANSI_BLACK, ANSI_CYAN, ANSI_BLUE, ANSI_YELLOW, ANSI_GREEN, ANSI_PURPLE,
+            ANSI_RED, ANSI_GREY };
 
     /**
      * Método principal que inicia el juego.
@@ -145,7 +145,7 @@ public class App {
      * </ol>
      *
      * @postcondición Los tableros de los jugadores están generados y el juego
-     * inicia en el modo seleccionado.
+     *                inicia en el modo seleccionado.
      */
     public static void prepararJuego() {
         // TODO función prepararJuego
@@ -156,7 +156,12 @@ public class App {
         nBarcos1 = calcularNBarcos(cantidad, tamanios);
         nBarcos2 = calcularNBarcos(cantidad, tamanios);
 
+        System.out.println("Tablero del jugador 1");
         mostrarTablero(barcosJ1);
+
+        System.out.println();
+
+        System.out.println("Tablero del jugador 2");
         mostrarTablero(barcosJ2);
 
         menuJuego();
@@ -167,7 +172,7 @@ public class App {
      * tamaños de barcos.
      *
      * @param cantidades Array con la cantidad de barcos por tipo.
-     * @param tamanios Array con los tamaños de los barcos correspondientes.
+     * @param tamanios   Array con los tamaños de los barcos correspondientes.
      * @return Total de casillas de barco.
      * @precondición {@code cantidades.length == tamanios.length}.
      */
@@ -186,7 +191,7 @@ public class App {
      *
      * @precondición Los tableros de ambos jugadores deben estar inicializados.
      * @postcondición El juego termina cuando {@link #nBarcos1} o
-     * {@link #nBarcos2} llega a 0.
+     *                {@link #nBarcos2} llega a 0.
      */
     public static void jugarPVP() {
         // TODO función jugarPVP
@@ -248,7 +253,7 @@ public class App {
      *
      * @precondición Los tableros de ambos jugadores deben estar inicializados.
      * @postcondición El juego termina cuando {@link #nBarcos1} o
-     * {@link #nBarcos2} llega a 0.
+     *                {@link #nBarcos2} llega a 0.
      */
     public static void jugarPVE() {
         // TODO función jugarPVE
@@ -306,13 +311,13 @@ public class App {
      * Realiza un disparo sobre el tablero especificado.
      *
      * @param matriz Tablero donde se dispara.
-     * @param x Coordenada X (fila) del disparo.
-     * @param y Coordenada Y (columna) del disparo.
+     * @param x      Coordenada X (fila) del disparo.
+     * @param y      Coordenada Y (columna) del disparo.
      * @return {@code true} si se tocó un barco, {@code false} si fue agua o
-     * disparo repetido.
+     *         disparo repetido.
      * @precondición {@code 0 <= x < TAM && 0 <= y < TAM}.
      * @postcondición La matriz queda actualizada con el resultado del disparo
-     * (6 = tocado, 7 = agua).
+     *                (6 = tocado, 7 = agua).
      */
     public static boolean disparar(int[][] matriz, int x, int y) {
         // TODO función disparar
@@ -344,10 +349,10 @@ public class App {
      * disparada.
      *
      * @param matriz Tablero donde se encuentra el barco.
-     * @param x Coordenada X (fila) del disparo.
-     * @param y Coordenada Y (columna) del disparo.
+     * @param x      Coordenada X (fila) del disparo.
+     * @param y      Coordenada Y (columna) del disparo.
      * @return {@code true} si el barco está completamente hundido,
-     * {@code false} si solo ha sido tocado.
+     *         {@code false} si solo ha sido tocado.
      */
     public static boolean cantarDisparo(int[][] matriz, int x, int y) {
         // TODO OPCIONAL función cantarDisparo
@@ -369,10 +374,10 @@ public class App {
      * </ul>
      *
      * @return Matriz {@link int[][]} de tamaño {@link #TAM} x {@link #TAM} con
-     * los barcos colocados. 0 = agua, 1-5 = barco sin tocar.
+     *         los barcos colocados. 0 = agua, 1-5 = barco sin tocar.
      * @precondición {@link #TAM} debe ser mayor que 0.
      * @postcondición {@link #matrizAux} queda reiniciada a cero y se devuelve
-     * un tablero completo.
+     *                un tablero completo.
      */
     public static int[][] generarTablero() {
         Random r = new Random();
@@ -407,35 +412,35 @@ public class App {
      * @param x Fila de la posición a comprobar.
      * @param y Columna de la posición a comprobar.
      * @return {@code true} si la posición y sus adyacentes están libres,
-     * {@code false} en caso contrario.
+     *         {@code false} en caso contrario.
      */
     public static boolean comprobarPosicion(int x, int y) {
         // TODO función comprobarPosición
 
-       /*
-       
-       if (x >= 0 && x < TAM && y >= 0 && y < TAM) {
-        } else {
-            return false;
-        }
-
-        if (matrizAux[x][y] != 0) {
-            return false;
-        }
-
-        for (int i = x - 1; i <= x + 1; i++) {
-            for (int j = y - 1; j <= y + 1; j++) {
-                if (i >= 0 && i < TAM && j >= 0 && j < TAM) {
-
-                    if (matrizAux[i][j] != 0) {
-                        return false;
-
-                    }
-
-                }
-            }
-        }
-       */ 
+        /*
+         * 
+         * if (x >= 0 && x < TAM && y >= 0 && y < TAM) {
+         * } else {
+         * return false;
+         * }
+         * 
+         * if (matrizAux[x][y] != 0) {
+         * return false;
+         * }
+         * 
+         * for (int i = x - 1; i <= x + 1; i++) {
+         * for (int j = y - 1; j <= y + 1; j++) {
+         * if (i >= 0 && i < TAM && j >= 0 && j < TAM) {
+         * 
+         * if (matrizAux[i][j] != 0) {
+         * return false;
+         * 
+         * }
+         * 
+         * }
+         * }
+         * }
+         */
 
         boolean libre = true;
 
@@ -461,7 +466,7 @@ public class App {
             libre = false;
         }
 
-    return libre;
+        return libre;
 
     }
 
@@ -469,14 +474,14 @@ public class App {
      * Determina una dirección viable para colocar un barco de tamaño dado desde
      * (x,y).
      *
-     * @param x Fila de inicio.
-     * @param y Columna de inicio.
+     * @param x        Fila de inicio.
+     * @param y        Columna de inicio.
      * @param tamBarco Tamaño del barco.
      * @return Índice de la dirección válida
-     * (0=arriba,1=derecha,2=abajo,3=izquierda), -1 si no hay direcciones
-     * válidas.
+     *         (0=arriba,1=derecha,2=abajo,3=izquierda), -1 si no hay direcciones
+     *         válidas.
      * @precondición {@code 1 <= tamBarco <= 5} y
-     * {@code 0 <= x < TAM && 0 <= y < TAM}.
+     *               {@code 0 <= x < TAM && 0 <= y < TAM}.
      */
     public static int comprobarDirecciones(int x, int y, int tamBarco) {
         Random r = new Random();
@@ -515,11 +520,11 @@ public class App {
     /**
      * Copia un barco en la posición (x,y) siguiendo la dirección indicada.
      *
-     * @param x Fila inicial.
-     * @param y Columna inicial.
+     * @param x         Fila inicial.
+     * @param y         Columna inicial.
      * @param direccion Dirección del barco
-     * (0=arriba,1=derecha,2=abajo,3=izquierda).
-     * @param tamanio Tamaño del barco.
+     *                  (0=arriba,1=derecha,2=abajo,3=izquierda).
+     * @param tamanio   Tamaño del barco.
      * @precondición {@code 0 <= x,y < TAM}, {@code direccion ∈ [0,3]},
      *               {@code tamanio > 0}.
      * @postcondición {@link #matrizAux} queda modificada con el barco colocado.
@@ -559,7 +564,7 @@ public class App {
                 }
 
                 if (valor_actual > 1 && valor_actual <= 5) {
-                    System.out.print(". ");
+                    System.out.print("B");
 
                 }
 
@@ -635,7 +640,6 @@ public class App {
 
         }
 
-        
     }
 
     /**
