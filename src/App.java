@@ -268,7 +268,7 @@ public class App {
             int fila = Integer.parseInt(sc.nextLine());
             int columna = Integer.parseInt(sc.nextLine());
 
-            int valor_anterior = barcosJ2[fila][columna];
+            
             boolean disparo = disparar(barcosJ2, fila, columna);
             
             if (disparo) {
