@@ -268,8 +268,9 @@ public class App {
             int fila = Integer.parseInt(sc.nextLine());
             int columna = Integer.parseInt(sc.nextLine());
 
+            int valor_anterior = barcosJ2[fila][columna];
             boolean disparo = disparar(barcosJ2, fila, columna);
-
+            
             if (disparo) {
                 nBarcos2--;
                 System.out.println("Has tocado un barcon de la maquina!!!!!");
@@ -559,12 +560,12 @@ public class App {
                 }
 
                 if (valor_actual == 0) {
-                    System.out.print(". ");
+                    System.out.print(ANSI_RED + ". " + ANSI_WHITE);
 
                 }
 
                 if (valor_actual > 1 && valor_actual <= 5) {
-                    System.out.print("B");
+                    System.out.print(ANSI_BLUE + "B" + ANSI_WHITE);
 
                 }
 
@@ -588,22 +589,22 @@ public class App {
                 int valor_actual = barcosJ1[i][j];
 
                 if (valor_actual == 6) {
-                    System.out.print("x");
+                    System.out.print(ANSI_RED + "x" + ANSI_WHITE);
 
                 }
 
                 if (valor_actual == 7) {
-                    System.out.print("~");
+                    System.out.print(ANSI_GREY + "~" + ANSI_WHITE);
 
-                }
+                } 
 
-                if (valor_actual == 0) {
-                    System.out.print(". ");
+                 if (valor_actual == 0) {
+                 System.out.print(". ");
 
-                }
+                 }
 
                 if (valor_actual > 1 && valor_actual <= 5) {
-                    System.out.print(". ");
+                    System.out.print(ANSI_BLUE + "B" + ANSI_WHITE);
 
                 }
 
@@ -620,19 +621,19 @@ public class App {
                 int valor_actual = barcosJ2[i][j];
 
                 if (valor_actual == 6) {
-                    System.out.print("x");
+                    System.out.print(ANSI_RED + "x" + ANSI_WHITE);
 
                 }
 
                 if (valor_actual == 7) {
-                    System.out.print("~");
+                    System.out.print(ANSI_GREY + "~" + ANSI_WHITE);
 
-                }
+                } 
 
-                if (valor_actual == 0) {
-                    System.out.print(". ");
+                 if (valor_actual == 0) {
+                 System.out.print(". ");
 
-                }
+                 }
 
             }
 
@@ -656,22 +657,22 @@ public class App {
                 int valor_actual = barcosJ2[i][j];
 
                 if (valor_actual == 6) {
-                    System.out.print("x");
+                    System.out.print(ANSI_RED + "x" + ANSI_WHITE);
 
                 }
 
                 if (valor_actual == 7) {
-                    System.out.print("~");
+                    System.out.print(ANSI_GREY + "~" + ANSI_WHITE);
 
-                }
+                } 
 
-                if (valor_actual == 0) {
-                    System.out.print(". ");
+                 if (valor_actual == 0) {
+                 System.out.print(". ");
 
-                }
+                 }
 
                 if (valor_actual > 1 && valor_actual <= 5) {
-                    System.out.print(". ");
+                    System.out.print(ANSI_BLUE + "B" + ANSI_WHITE);
 
                 }
 
@@ -688,19 +689,19 @@ public class App {
                 int valor_actual = barcosJ1[i][j];
 
                 if (valor_actual == 6) {
-                    System.out.print("x");
+                    System.out.print(ANSI_RED + "x" + ANSI_WHITE);
 
                 }
 
                 if (valor_actual == 7) {
-                    System.out.print("~");
+                    System.out.print(ANSI_GREY + "~" + ANSI_WHITE);
 
-                }
+                } 
 
-                if (valor_actual == 0) {
-                    System.out.print(". ");
+                 if (valor_actual == 0) {
+                 System.out.print(". ");
 
-                }
+                 }
 
             }
 
